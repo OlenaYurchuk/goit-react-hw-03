@@ -12,15 +12,15 @@ export default function ContactForm({ onAddContact }) {
   const ContactFormSchema = Yup.object().shape({
     username: Yup.string().min(3, "Too Short!")
       .max(50, "Too Long!").required("Required"),
-    phonenumber: Yup.number().required("Required")
+    phonenumber: Yup.string().required("Required")
   });
 
   const handleSubmit = (values, actions) => {
     console.log(values)
     onAddContact({
       id: nanoid(),
-      name: event.target.elements.username.value,
-      number: event.target.elements.phonenumber.value
+      name: values.username,
+      number: values.phonenumber
     });
     actions.resetForm();
   }
@@ -41,7 +41,7 @@ export default function ContactForm({ onAddContact }) {
         </div>
         <div className={css.inputWrap}>
           <label htmlFor={phoneFieldId}>Number</label>
-          <Field className={css.input} type="number" name="phonenumber" id={phoneFieldId} />
+          <Field className={css.input} name="phonenumber" id={phoneFieldId} />
           <ErrorMessage className={css.error} name="phonenumber" component="span" />
         </div>
         <button className={css.btn} type="submit">Add contact</button>
